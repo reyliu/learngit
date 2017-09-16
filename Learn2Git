@@ -1,0 +1,456 @@
+Chapter1 Create Git Repository
+
+liurui@ubuntu:~$ git -version
+Unknown option: -version
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+liurui@ubuntu:~$ git--version
+git--version: command not found
+liurui@ubuntu:~$ git --version
+git version 2.7.4
+liurui@ubuntu:~$ mkdir learngit
+liurui@ubuntu:~$ ls
+Desktop    Downloads         learngit  Pictures  Templates
+Documents  examples.desktop  Music     Public    Videos
+liurui@ubuntu:~$ cd \
+> 
+liurui@ubuntu:~$ cd \:
+bash: cd: :: No such file or directory
+liurui@ubuntu:~$ cd ..
+liurui@ubuntu:/home$ cd ..
+liurui@ubuntu:/$ cd ..
+liurui@ubuntu:/$ cd /home/liurui
+liurui@ubuntu:~$ cd learngit
+liurui@ubuntu:~/learngit$ pwd
+/home/liurui/learngit
+liurui@ubuntu:~/learngit$ git init
+Initialized empty Git repository in /home/liurui/learngit/.git/
+liurui@ubuntu:~/learngit$ ls
+liurui@ubuntu:~/learngit$ ls -ah
+.  ..  .git
+
+Chapter2 Add file
+create a file named readme.txt and edit it.
+
+liurui@ubuntu:~/learngit$ git add readme.txt
+fatal: pathspec 'readme.txt' did not match any files
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git commit -m "wrote a readme file"
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'liurui@ubuntu.(none)')
+liurui@ubuntu:~/learngit$ git commit -m"wrote a readme file"
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: unable to auto-detect email address (got 'liurui@ubuntu.(none)')
+liurui@ubuntu:~/learngit$ git config --global user.email "ahliurui011@163.com"
+liurui@ubuntu:~/learngit$ git config --global user.name "reyliu"
+liurui@ubuntu:~/learngit$ git commit -m "wrote a readme file"
+[master (root-commit) adbdc00] wrote a readme file
+ 1 file changed, 2 insertions(+)
+ create mode 100644 readme.txt
+liurui@ubuntu:~/learngit$ 
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git commit -m "add distributed"
+[master 0d53aa9] add distributed
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+liurui@ubuntu:~/learngit$ git status
+On branch master
+nothing to commit, working directory clean
+
+Chapter3 Version Control
+edit readme file.
+
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git diff
+diff --git a/readme.txt b/readme.txt
+index c8dfaa7..9247db6 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,2 +1,2 @@
+ Git is a distributed version control system.
+-It is free.
++Git is free software.
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git diff
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+liurui@ubuntu:~/learngit$ git commit -m "add 'software'"
+[master ac49aa6] add 'software'
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+liurui@ubuntu:~/learngit$ git log
+commit ac49aa62b54071ac821259afa077d4d0ee200f96
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:46:05 2017 -0700
+
+    add 'software'
+
+commit 0d53aa9955bb12e11eedf8d8945f54af90ee3191
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:43:14 2017 -0700
+
+    add distributed
+
+commit adbdc00df8215373a5df920bbb89f03bbb0e0566
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:32:35 2017 -0700
+
+    wrote a readme file
+liurui@ubuntu:~/learngit$ git log --pretty=oneline
+ac49aa62b54071ac821259afa077d4d0ee200f96 add 'software'
+0d53aa9955bb12e11eedf8d8945f54af90ee3191 add distributed
+adbdc00df8215373a5df920bbb89f03bbb0e0566 wrote a readme file
+liurui@ubuntu:~/learngit$ git reset --hard HEAD^
+HEAD is now at 0d53aa9 add distributed
+liurui@ubuntu:~/learngit$ cat -n readme.txt
+     1	Git is a distributed version control system.
+     2	It is free.
+liurui@ubuntu:~/learngit$ git log
+commit 0d53aa9955bb12e11eedf8d8945f54af90ee3191
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:43:14 2017 -0700
+
+    add distributed
+
+commit adbdc00df8215373a5df920bbb89f03bbb0e0566
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:32:35 2017 -0700
+
+    wrote a readme file
+()liurui@ubuntu:~/learngit$ git reset --hard ac49aa
+HEAD is now at ac49aa6 add 'software'
+liurui@ubuntu:~/learngit$ git log
+commit ac49aa62b54071ac821259afa077d4d0ee200f96
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:46:05 2017 -0700
+
+    add 'software'
+
+commit 0d53aa9955bb12e11eedf8d8945f54af90ee3191
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:43:14 2017 -0700
+
+    add distributed
+
+commit adbdc00df8215373a5df920bbb89f03bbb0e0566
+Author: reyliu <ahliurui011@163.com>
+Date:   Fri Sep 15 19:32:35 2017 -0700
+
+    wrote a readme file
+liurui@ubuntu:~/learngit$ git reflog
+ac49aa6 HEAD@{0}: reset: moving to ac49aa
+0d53aa9 HEAD@{1}: reset: moving to HEAD^
+ac49aa6 HEAD@{2}: commit: add 'software'
+0d53aa9 HEAD@{3}: commit: add distributed
+adbdc00 HEAD@{4}: commit (initial): wrote a readme file
+
+Chapter4 Understand Stage
+edit readme.txt and create LICENSE
+
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	LICENSE
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git add LICENSE
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   LICENSE
+	modified:   readme.txt
+
+liurui@ubuntu:~/learngit$ git commit -m "understand how stage works"
+[master 5df92ac] understand how stage works
+ 2 files changed, 2 insertions(+)
+ create mode 100644 LICENSE
+liurui@ubuntu:~/learngit$ git status
+On branch master
+nothing to commit, working directory clean
+
+Chapter5 checkout One-key Recovery
+Replace Working Directory with master/stage
+(if file modified yet not added, recover master
+ if file modified and added, recover stage)
+
+liurui@ubuntu:~/learngit$ cat readme.txt
+Git is a distributed version control system.
+Git is free software.
+Git has a mutable index called stage.
+Git tracks changes.
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+liurui@ubuntu:~/learngit$ cat readme.txt
+Git is a distributed version control system.
+Git is free software.
+Git has a mutable index called stage.
+Git tracks changes of files.
+liurui@ubuntu:~/learngit$ git commit -m "git tracks changes"
+[master 3958642] git tracks changes
+ 1 file changed, 1 insertion(+)
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git diff HEAD -- readme.txt
+diff --git a/readme.txt b/readme.txt
+index 3804fcd..dee2170 100644
+--- a/readme.txt
++++ b/readme.txt
+@@ -1,4 +1,4 @@
+ Git is a distributed version control system.
+ Git is free software.
+ Git has a mutable index called stage.
+-Git tracks changes.
++Git tracks changes of files.
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git commit -m "tracks of files"
+[master 53dc818] tracks of files
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ cat readme.txt
+Git is a distributed version control system.
+Git is free software.
+Git has a mutable index called stage.
+Git tracks changes of files.
+My stupid boss
+liurui@ubuntu:~/learngit$ git checkout -- file
+error: pathspec 'file' did not match any file(s) known to git.
+liurui@ubuntu:~/learngit$ git checkout -- readme.txt
+liurui@ubuntu:~/learngit$ cat readme.txt
+Git is a distributed version control system.
+Git is free software.
+Git has a mutable index called stage.
+Git tracks changes of files.
+liurui@ubuntu:~/learngit$ 
+liurui@ubuntu:~/learngit$ cat readme.txt
+Git is a distributed version control system.
+Git is free software.
+Git has a mutable index called stage.
+Git tracks changes of files.
+My stupid boss
+liurui@ubuntu:~/learngit$ git add readme.txt
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	modified:   readme.txt
+
+liurui@ubuntu:~/learngit$ git reset HEAD readme.txt
+Unstaged changes after reset:
+M	readme.txt
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   readme.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git checkout -- readme.txt
+liurui@ubuntu:~/learngit$ git status
+On branch master
+nothing to commit, working directory clean
+liurui@ubuntu:~/learngit$ 
+liurui@ubuntu:~/learngit$ git add test
+liurui@ubuntu:~/learngit$ git commit -m "add test"
+[master 2df37eb] add test
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 test
+liurui@ubuntu:~/learngit$ rm test
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    test
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git checkout -- test
+liurui@ubuntu:~/learngit$ git status
+On branch master
+nothing to commit, working directory clean
+liurui@ubuntu:~/learngit$ ls
+LICENSE  readme.txt  test
+liurui@ubuntu:~/learngit$ rm test
+liurui@ubuntu:~/learngit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	deleted:    test
+
+no changes added to commit (use "git add" and/or "git commit -a")
+liurui@ubuntu:~/learngit$ git rm test
+rm 'test'
+liurui@ubuntu:~/learngit$ ls
+LICENSE  readme.txt
+liurui@ubuntu:~/learngit$ status
+unity-settings-daemon start/running, process 1613
+liurui@ubuntu:~/learngit$ git commit -m "remove test"
+[master 91307c5] remove test
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 test
+liurui@ubuntu:~/learngit$ git status
+On branch master
+nothing to commit, working directory clean
+liurui@ubuntu:~/learngit$ git reflog
+91307c5 HEAD@{0}: commit: remove test
+2df37eb HEAD@{1}: commit: add test
+53dc818 HEAD@{2}: commit: tracks of files
+3958642 HEAD@{3}: commit: git tracks changes
+5df92ac HEAD@{4}: commit: understand how stage works
+ac49aa6 HEAD@{5}: reset: moving to ac49aa
+0d53aa9 HEAD@{6}: reset: moving to HEAD^
+ac49aa6 HEAD@{7}: commit: add 'software'
+0d53aa9 HEAD@{8}: commit: add distributed
+adbdc00 HEAD@{9}: commit (initial): wrote a readme file
+
+Chapter6 Remote Repository
+
+liurui@ubuntu:~$ ssh-keygen -t rsa -C "ahliurui011@163.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/liurui/.ssh/id_rsa): 
+Created directory '/home/liurui/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/liurui/.ssh/id_rsa.
+Your public key has been saved in /home/liurui/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:itrlzNnvXpFizanvy/wznxX6vRkAFTzW8nD+3ocuh9o ahliurui011@163.com
+The key's randomart image is:
++---[RSA 2048]----+
+|            .oo  |
+|            .* o |
+|           .. B  |
+|           o.o o |
+|        S o *. ..|
+|     . . . o .o o|
+|    . o   . .o +o|
+|   o = o   *o * X|
+|  . . = .+=oE*oO=|
++----[SHA256]-----+
+liurui@ubuntu:~$ ls -ah
+.              .dmrc             learngit  .ssh
+..             Documents         .lesshst  .sudo_as_admin_successful
+.bash_history  Downloads         .local    Templates
+.bash_logout   examples.desktop  .mozilla  Videos
+.bashrc        .gconf            Music     .Xauthority
+.cache         .gitconfig        Pictures  .xsession-errors
+.config        .gnupg            .profile  .xsession-errors.old
+Desktop        .ICEauthority     Public
+liurui@ubuntu:~$ cd .ssh
+liurui@ubuntu:~/.ssh$ ls
+id_rsa  id_rsa.pub
+liurui@ubuntu:~/.ssh$ cat id_rsa
+
+liurui@ubuntu:~/.ssh$ cat id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Y5N1CQcWG8KhMcZzqWy39L8PNT8RoofHYhCuZoHL1/wERZiHD6Ckr+hLAvE7P2Sl0jtvf8Zt4jTdTJyPNDelGxI6rz9teaiZmp43cp9zMElvJOrabQr62IC3B0DpiDiXgtzlx/I8NwG9oNihfbfEZN1BYgtghJFFlTRM0iNzJ4m7rV+qGiYGIDLWD0RzSeLl8OZtNhMLpSViANUYCc/mUWwC2KI3HcAYLiKO8XnsPwVjfbCR7/cqaG3bsisC/5TW8X58s/hcu43DBbf88P0a1KHoYjxtU5i+weVoiviBSrZKih1eSuHsgDnUWtGfPFmooimumsue4/UQl+14UbQz ahliurui011@163.com
+liurui@ubuntu:~/.ssh$ cd ..
+liurui@ubuntu:~$ git remote add origin git@github.com:reyliu/learngit.git
+fatal: Not a git repository (or any of the parent directories): .git
+liurui@ubuntu:~$ 
+liurui@ubuntu:~$ git remote add origin https://github.com/reyliu/learngit.git
+fatal: Not a git repository (or any of the parent directories): .git
+liurui@ubuntu:~$ cd learngit
+liurui@ubuntu:~/learngit$ git remote add origin https://github.com/reyliu/learngit.git
+liurui@ubuntu:~/learngit$ git push -u origin master
+Username for 'https://github.com': reyliu
+Password for 'https://reyliu@github.com': 
+Counting objects: 23, done.
+Compressing objects: 100% (17/17), done.
+Writing objects: 100% (23/23), 1.84 KiB | 0 bytes/s, done.
+Total 23 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), done.
+To https://github.com/reyliu/learngit.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+liurui@ubuntu:~/learngit$ git clone https://github.com/lisa-lab/DeepLearningTutorials.git
+Cloning into 'DeepLearningTutorials'...
+remote: Counting objects: 4128, done.
+remote: Total 4128 (delta 0), reused 0 (delta 0), pack-reused 4128
+Receiving objects: 100% (4128/4128), 7.70 MiB | 29.00 KiB/s, done.
+Resolving deltas: 100% (2527/2527), done.
+Checking connectivity... done.
+
+Chapter7 Branch
+
+
+
